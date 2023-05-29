@@ -15,13 +15,15 @@
                                         <div class="col-sm-9">
                                             <div class="input-group">
                                                 <select class="form-control" name="category_id" id="">
-                                                  
-                                                 
+                                                <!-- @foreach ($categories as $category)
+                                                <option value="{{$category->id}}" {{$category->id==$sub_category->category->id ?'selected':''}}  >{{$category->name}}</option>
+                                                @endforeach -->
                                                 <option value="{{$sub_category->category->id}}">{{$sub_category->category->name}}</option>
                                                 
                                                 </select>
                                             </div>
                                         </div>
+                                       
                                     </div>
                                     <div class="form-group row">
                                         <label for="exampleInputuname3" class="col-sm-3 control-label">Sub Category Name <span class="text-danger">*</span></label>
@@ -62,7 +64,7 @@
                                     
                                     <div class="form-group row m-b-0">
                                         <div class="offset-sm-3 col-sm-9">
-                                            <button type="submit" class="btn btn-success waves-effect waves-light text-white">Update Info</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light text-white">Update subCategory  Info</button>
                                         </div>
                                     </div>
                                 </form>
