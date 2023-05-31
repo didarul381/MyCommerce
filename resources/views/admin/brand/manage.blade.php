@@ -35,7 +35,7 @@
                                                     <a href="{{route('brand.edit',['id'=>$brand->id])}}" class="btn btn-success btn-sm">
                                                         <i class="ti-reddit"></i>
                                                     </a>
-                                                    <a href="{{route('brand.delete',['id'=>$brand>id])}}"  onclick="return confirm('Are you sure to delete');" class="btn btn-success btn-sm">
+                                                    <a href="{{route('brand.delete',['id'=>$brand->id])}}"  onclick="return confirm('Are you sure to delete');" class="btn btn-success btn-sm">
                                                         <i class="ti ti-trash"></i>
                                                     </a>
                                                 </td>

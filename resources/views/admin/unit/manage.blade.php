@@ -31,7 +31,7 @@
                                                 <td>{{$unit->code}}</td>
                                                 <td>{{$unit->description}}</td>
                                     
-                                                <td>{{$category->status==1?'published':'unpublished'}}</td>
+                                                <td>{{$unit->status==1?'published':'unpublished'}}</td>
                                                 <td>
                                                     <a href="{{route('unit.edit',['id'=>$unit->id])}}" class="btn btn-success btn-sm">
                                                         <i class="ti-reddit"></i>

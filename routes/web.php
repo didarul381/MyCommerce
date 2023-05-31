@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\ProductController;
 
 
 /*
@@ -70,6 +71,17 @@ Route::get('unit/manage',[UnitController::class, 'manage'])->name('unit.manage')
 Route::get('unit/edit/{id}',[UnitController::class, 'edit'])->name('unit.edit');
 Route::post('unit/update{id}',[UnitController::class, 'update'])->name('unit.update');
 Route::get('unit/delete/{id}',[UnitController::class, 'delete'])->name('unit.delete');
+
+
+//product
+Route::get('product/add',[ProductController::class, 'index'])->name('product.add');
+Route::post('product/new',[ProductController::class, 'create'])->name('product.new');
+Route::get('product/get-subcategory-by-category',[ProductController::class, 'getSubCategory'])->name('product.get-subcategory-by-category');
+Route::get('product/manage',[ProductController::class, 'manage'])->name('product.manage');
+Route::get('product/edit/{id}',[ProductController::class, 'edit'])->name('product.edit');
+Route::post('product/update{id}',[ProductController::class, 'update'])->name('product.update');
+Route::get('product/delete/{id}',[ProductController::class, 'delete'])->name('product.delete');
+
 
 
 });

@@ -17,6 +17,7 @@
     <!-- chartist CSS -->
     <link  href="{{asset('/')}}admin/assets/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet">
     <link href="{{asset('/')}}admin/assets/node_modules/morrisjs/morris.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('/')}}admin/assets/node_modules/summernote/dist/summernote-bs4.css">
     <link rel="stylesheet" type="text/css"
         href="{{asset('/')}}admin/assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
@@ -112,6 +113,7 @@
     <script src="{{asset('/')}}admin/dist/js/dashboard1.js"></script>
     <script src="{{asset('/')}}admin/assets/node_modules/toast-master/js/jquery.toast.js"></script>
     <script src="{{asset('/')}}admin/assets/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="{{asset('/')}}admin/assets/node_modules/summernote/dist/summernote-bs4.min.js"></script>
 
 
 
@@ -214,6 +216,55 @@
     });
 
 </script>
+
+<!-- summerno -->
+<script>
+    $(function() {
+
+        $('.summernote').summernote({
+            height: 350, // set editor height
+            minHeight: null, // set minimum height of editor
+            maxHeight: null, // set maximum height of editor
+            focus: false // set focus to editable area after initializing summernote
+        });
+
+        $('.inline-editor').summernote({
+            airMode: true
+        });
+
+    });
+
+    window.edit = function() {
+            $(".click2edit").summernote()
+        },
+        window.save = function() {
+            $(".click2edit").summernote('destroy');
+        }
+    </script>
+
+    <script>
+        $(document).on('change','#categoryId',function(){
+            var categoryId =$(this).val();
+           $.ajax({
+            type:"GET",
+            url:"{{route('product.get-subcategory-by-category')}}",
+            data:{id:categoryId},
+            dataType:"JSON",
+            success:function(response){
+                var subCategory=  $('#subCategory');
+              subCategory.empty();
+                var option='';
+                // option +=' <option value="" >---seleced sub categoru-----</option>';
+                $.each(response,function(key,value){
+                    option +=' <option value="+value.id+" >'+value.name+'</option>';
+                });
+             
+              subCategory.append(option);
+            }
+
+           })
+        });
+    </script>
 </body>
 
 </html>
