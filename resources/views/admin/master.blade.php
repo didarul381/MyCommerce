@@ -256,7 +256,7 @@
                 var option='';
                 // option +=' <option value="" >---seleced sub categoru-----</option>';
                 $.each(response,function(key,value){
-                    option +=' <option value="+value.id+" >'+value.name+'</option>';
+                    option +=' <option value="'+value.id+'" >'+value.name+'</option>';
                 });
              
               subCategory.append(option);

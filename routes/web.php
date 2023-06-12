@@ -24,7 +24,7 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/',[MyCommerceController::class,'index'])->name('home');
-Route::get('/product-category',[MyCommerceController::class,'category'])->name('product-category');
+Route::get('/product-category/{id}',[MyCommerceController::class,'category'])->name('product-category');
 Route::get('/product-detail',[MyCommerceController::class,'detail'])->name('product-detail');
 Route::get('/show-cart',[CartController::class,'index'])->name('show-cart');
 Route::get('/checkout',[CheckoutController::class,'index'])->name('checkout');
@@ -78,6 +78,7 @@ Route::get('product/add',[ProductController::class, 'index'])->name('product.add
 Route::post('product/new',[ProductController::class, 'create'])->name('product.new');
 Route::get('product/get-subcategory-by-category',[ProductController::class, 'getSubCategory'])->name('product.get-subcategory-by-category');
 Route::get('product/manage',[ProductController::class, 'manage'])->name('product.manage');
+Route::get('product/detail/{id}',[ProductController::class, 'detail'])->name('product.detail');
 Route::get('product/edit/{id}',[ProductController::class, 'edit'])->name('product.edit');
 Route::post('product/update{id}',[ProductController::class, 'update'])->name('product.update');
 Route::get('product/delete/{id}',[ProductController::class, 'delete'])->name('product.delete');

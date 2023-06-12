@@ -43,8 +43,9 @@
                                             <div class="input-group">
                                                 <select class="form-control" name="brand_id" id="">
                                                     <option value="" disabled selected>---seleced Brand -----</option>
+    
                                                   @foreach ($brands as $brand)
-                                                <option value="{$brand->id}}">{{$brand->name}}</option>
+                                                <option value="{{$brand->id}}">{{$brand->name}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
@@ -149,7 +150,7 @@
                                     <div class="form-group row">
                                         <label class="form-label col-sm-3 control-label" for="web">Other Img</label>
                                         <div class="col-sm-9">
-                                            <input type="file" name="other_image" multiple id="input-file-now" class="dropify" accept="image/*" />
+                                            <input type="file" name="other_image[]" multiple id="input-file-now" class="dropify" accept="image/*" />
                                         </div>
                                     </div>
 
