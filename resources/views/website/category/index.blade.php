@@ -208,7 +208,7 @@ Product Category page
     <div class="product-info">
     <span class="category">Speaker</span>
     <h4 class="title">
-    <a href="{{route('product-detail')}}">{{$product->name}}</a>
+    <a href="{{route('product-detail',['id'=>$product->id])}}">{{$product->name}}</a>
     </h4>
     <ul class="review">
     <li><i class="lni lni-star-filled"></i></li>

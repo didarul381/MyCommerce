@@ -19,9 +19,9 @@ class MyCommerceController extends Controller
             'products'=> Product::where('category_id',$id)->orderBy('id','desc')->get(),
         ]);
     }
-    public function detail(){
+    public function detail($id){
         return view('website.detail.index',[
-            
+            "product"=>Product::find($id)
         ]);
     }
 }
