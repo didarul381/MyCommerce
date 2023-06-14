@@ -50,7 +50,7 @@ Detail Page
 </div>
 </div>
 </div>
-
+@php($sum=0)
 @foreach($cart_products as $cart_product)
 <div class="cart-single-list">
 <div class="row align-items-center">
@@ -87,6 +87,7 @@ Detail Page
 </div>
 </div>
 </div>
+@php($sum=$sum+($cart_product->price*$cart_product->qty))
 @endforeach
 
 
@@ -113,10 +114,11 @@ Detail Page
 <div class="col-lg-4 col-md-6 col-12">
 <div class="right">
 <ul>
-<li>Cart Subtotal<span>$2560.00</span></li>
-<li>Shipping<span>Free</span></li>
-<li>You Save<span>$29.00</span></li>
-<li class="last">You Pay<span>$2531.00</span></li>
+<li>Cart Subtotal<span>TK.{{$sum}}</span></li>
+<li>Tax<span>TK.{{$tax=($sum*15)/100}}</span></li>
+<li>Shipping<span>{{$shpping=100}}</span></li>
+<!-- <li>You Save<span>$29.00</span></li> -->
+<li class="last">You Pay<span>{{$total=$sum+$tax+$shpping}}</span></li>
 </ul>
 <div class="button">
 <a href="{{route('checkout')}}" class="btn">Checkout</a>
