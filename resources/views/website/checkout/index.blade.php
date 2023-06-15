@@ -105,6 +105,7 @@ Checkout page
 <div class="checkout-sidebar-price-table mt-30">
 <h5 class="title">Pricing Table</h5>
 <div class="sub-total-price">
+    @php($total=0)
     @foreach(ShoppingCart::all() as $item)
 <div class="total-price">
 <p class="value">
@@ -115,10 +116,33 @@ Checkout page
 <p class="price">{{$item->price*$item->qty}}</p>
 
 </div>
-
+@php($total=$total+($item->price*$item->qty))
 @endforeach
 </div>
-
+<div class="total-payable">
+    <div class="payable-price">
+        <p class="value">Subtotal:</p>
+        <p class="price">{{$total}}</p>
+    </div>
+</div>
+<div class="total-payable">
+    <div class="payable-price">
+        <p class="value">Tax Amount(15%):</p>
+        <p class="price">{{$tax=($total*15)/100}}</p>
+    </div>
+</div>
+<div class="total-payable">
+    <div class="payable-price">
+        <p class="value">Shpping:</p>
+        <p class="price">{{$shpping=100}}</p>
+    </div>
+</div>
+<div class="total-payable">
+    <div class="payable-price">
+        <p class="value">Total:</p>
+        <p class="price">{{$total+$tax+$shpping}}</p>
+    </div>
+</div>
 <div class="price-table-btn button">
 <a href="javascript:void(0)" class="btn btn-alt">Checkout</a>
 </div>
