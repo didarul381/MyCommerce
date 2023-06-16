@@ -115,7 +115,7 @@ Detail Page
 <div class="right">
 <ul>
 <li>Cart Subtotal<span>TK.{{$sum}}</span></li>
-<li>Tax<span>TK.{{$tax=($sum*15)/100}}</span></li>
+<li>Tax<span>TK.{{$tax=round(($sum*15)/100)}}</span></li>
 <li>Shipping<span>{{$shpping=100}}</span></li>
 <!-- <li>You Save<span>$29.00</span></li> -->
 <li class="last">You Pay<span>{{$total=$sum+$tax+$shpping}}</span></li>

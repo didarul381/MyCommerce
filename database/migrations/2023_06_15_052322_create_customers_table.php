@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations 54min.
      */
     public function up(): void
     {
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->text('address')->nullable();
             $table->string('date_of_birth')->nullable();
-            $table->string('nid')->unique();
+            $table->string('nid')->unique()->nullable();
             $table->string('image')->nullable();
             $table->string('blood_group')->nullable();
             $table->timestamps();

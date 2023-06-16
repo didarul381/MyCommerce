@@ -38,56 +38,67 @@ Checkout page
 <div class="tab-content">
 <div class="tab-pane fade show active " id="cash">
     <section class="checkout-steps-form-content collapse show" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-        <div class="row">
-        <div class="col-md-12">
-        <div class="single-form form-default">
-        <label>Full Name</label>
-        <div class="row">
-        <div class="col-md-12 form-input form">
-        <input type="text" required name="name" placeholder="FULL Name">
-        </div>
-      
-        </div>
-        </div>
-        </div>
-        <div class="col-md-6">
-        <div class="single-form form-default">
-        <label>Email Address</label>
-        <div class="form-input form">
-        <input type="email" required name="email" placeholder="Email Address">
-        </div>
-        </div>
-        </div>
-        <div class="col-md-6">
-        <div class="single-form form-default">
-        <label>Phone Number</label>
-        <div class="form-input form">
-        <input type="number" required name="mobile" placeholder="Phone Number">
-        </div>
-        </div>
-        </div>
-        <div class="col-md-12">
-        <div class="single-form form-default">
-        <label>Delivery Address</label>
-        <div class="form-input form">
-        <textarea  placeholder=" Address" name="delivary_address"></textarea>
-        </div>
-        </div>
-        </div>
-        <div class="col-md-12">
-        <div class="single-checkbox checkbox-style-3">
-        <input type="checkbox" id="checkbox-3" checked>
-        <label for="checkbox-3"><span></span></label>
-        <p>I accept all treams & condition.</p>
-        </div>
-        </div>
-        <div class="col-md-12">
-        <div class="single-form button">
-        <button type="submit" class="btn">Confirm Order
-        </button>
-        </div>
-         </div>
-        </div>
+        <form action="{{route('new-cash-order')}}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-md-12">
+                <div class="single-form form-default">
+                <label>Full Name</label>
+                <div class="row">
+                <div class="col-md-12 form-input form">
+                <input type="text" required name="name" placeholder="FULL Name">
+                </div>
+              
+                </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+                <div class="single-form form-default">
+                <label>Email Address</label>
+                <div class="form-input form">
+                <input type="email" required name="email" placeholder="Email Address">
+                </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+                <div class="single-form form-default">
+                <label>Phone Number</label>
+                <div class="form-input form">
+                <input type="number" required name="mobile" placeholder="Phone Number">
+                </div>
+                </div>
+                </div>
+                <div class="col-md-12">
+                <div class="single-form form-default">
+                <label>Delivery Address</label>
+                <div class="form-input form">
+                <textarea  placeholder=" Address" name="delivary_address"></textarea>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="single-form form-default">
+                    <label>Payment Type</label>
+                    <div class="">
+                  <label for=""><input  class="m-2" type="radio" checked name="payment_type" value="1">Cash On delivary</label>
+                    </div>
+                    </div>
+                    </div>
+                <div class="col-md-12">
+                <div class="single-checkbox checkbox-style-3">
+                <input type="checkbox" id="checkbox-3" checked>
+                <label for="checkbox-3"><span></span></label>
+                <p>I accept all treams & condition.</p>
+                </div>
+                </div>
+                <div class="col-md-12">
+                <div class="single-form button">
+                <button type="submit" class="btn">Confirm Order
+                </button>
+                </div>
+                 </div>
+                </div>
+        </form>
         </section>
 
     </div>
@@ -128,7 +139,7 @@ Checkout page
 <div class="total-payable">
     <div class="payable-price">
         <p class="value">Tax Amount(15%):</p>
-        <p class="price">{{$tax=($total*15)/100}}</p>
+        <p class="price">{{$tax=round(($total*15)/100)}}</p>
     </div>
 </div>
 <div class="total-payable">
@@ -140,8 +151,13 @@ Checkout page
 <div class="total-payable">
     <div class="payable-price">
         <p class="value">Total:</p>
-        <p class="price">{{$total+$tax+$shpping}}</p>
+        <p class="price">{{$orderTotal=$total+$tax+$shpping}}</p>
     </div>
+    <?php 
+        Session::put('order_total',$orderTotal);
+        Session::put('tax_total',$tax);
+        Session::put('shpping_total',$shpping);
+    ?>
 </div>
 <div class="price-table-btn button">
 <a href="javascript:void(0)" class="btn btn-alt">Checkout</a>
