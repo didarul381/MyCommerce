@@ -23,8 +23,11 @@ class CheckoutController extends Controller
         $this->customer->name=$request->name;
         $this->customer->email=$request->email;
         $this->customer->mobile=$request->mobile;
-        $this->customer->password=bcrypt($request->moblie);
+        $this->customer->password=bcrypt($request->mobile);
         $this->customer->save();
+
+        Session::put('customer_id', $this->customer->id);
+        Session::put('customer_name', $this->customer->name);
 
 
         $this->order=new Order();
@@ -48,6 +51,8 @@ class CheckoutController extends Controller
                  $this->orderDetail->product_price=$item->price;
                  $this->orderDetail->product_qty=$item->qty;
                  $this->orderDetail->save();
+
+                 ShoppingCart::remove($item->__raw_id);
                  
             
         }
