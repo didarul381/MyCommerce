@@ -46,7 +46,12 @@ Checkout page
                 <label>Full Name</label>
                 <div class="row">
                 <div class="col-md-12 form-input form">
+                    @if(isset($customer->id))
+                <input type="text" required name="name" value="{{$customer->name}}" readonly placeholder="FULL Name">
+                @else
                 <input type="text" required name="name" placeholder="FULL Name">
+                <span class="text-danger">{{$errors->has('name')?$errors->first('name'):''}}</span>
+                @endif
                 </div>
               
                 </div>
@@ -56,16 +61,28 @@ Checkout page
                 <div class="single-form form-default">
                 <label>Email Address</label>
                 <div class="form-input form">
-                <input type="email" required name="email" placeholder="Email Address">
-                </div>
+                @if(isset($customer->id))
+                <input type="email" required name="email" value="{{$customer->email}}" readonly placeholder="Email Address">
+                @else
+                <input type="email" required name="email"  placeholder="Email Address">
+                <span class="text-danger">{{$errors->has('email')?$errors->first('email'):''}}</span>
+               
+                @endif
+               </div>
                 </div>
                 </div>
                 <div class="col-md-6">
                 <div class="single-form form-default">
                 <label>Phone Number</label>
                 <div class="form-input form">
-                <input type="number" required name="mobile" placeholder="Phone Number">
-                </div>
+                @if(isset($customer->id))
+                <input type="number" required name="mobile" value="{{$customer->mobile}}" readonly  placeholder="Phone Number">
+                @else
+                <input type="number" required name="mobile"   placeholder="Phone Number">
+                <span class="text-danger">{{$errors->has('mobile')?$errors->first('mobile'):''}}</span>
+               
+                @endif
+            </div>
                 </div>
                 </div>
                 <div class="col-md-12">
@@ -73,6 +90,7 @@ Checkout page
                 <label>Delivery Address</label>
                 <div class="form-input form">
                 <textarea  placeholder=" Address" name="delivary_address"></textarea>
+                <span class="text-danger">{{$errors->has('delivary_address')?$errors->first('delivary_address'):''}}</span>
                 </div>
                 </div>
                 </div>

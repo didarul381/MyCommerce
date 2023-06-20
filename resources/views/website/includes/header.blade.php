@@ -61,7 +61,7 @@
 Hello {{(Session::get('customer_name'))}}
 <ul class="user-login">
 <li>
-<a href="login.html">Dashboard</a>
+<a href="{{route('customer.dashboard')}}">Dashboard</a>
 </li>
 <li>
 <a href="{{route('customer.logout')}}">Logout</a>

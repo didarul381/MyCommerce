@@ -43,7 +43,7 @@ Customer Dashboard
 </div>
 <div class="col-md-9">
     <div class="card card-body">
-        <h2>My Dashboard</h2>
+        <h2>My profile</h2>
     </div>
 </div>
 

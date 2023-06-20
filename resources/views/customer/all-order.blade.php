@@ -43,7 +43,30 @@ Customer Dashboard
 </div>
 <div class="col-md-9">
     <div class="card card-body">
-        <h2>My Dashboard</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>SL No</th>
+                    <th>Order No</th>
+                    <th>Order Date</th>
+                    <th>Order Total</th>
+                    <th>Delivary Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($orders as $order)
+                <tr>
+                <td>1</td>
+                <td>{{$order->id}}</td>
+                <td>{{$order->order_date}}</td>
+                <td>{{$order->order_total}}</td>
+                <td>{{$order->delivery_address}}</td>
+                <td>1</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 

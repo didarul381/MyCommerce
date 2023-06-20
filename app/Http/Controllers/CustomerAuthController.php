@@ -12,11 +12,10 @@ class CustomerAuthController extends Controller
     {
         return view('customer.index');
     }
+    
     public function login(Request $request)
     {
-        //  return $request;
-        
-    //    $this->customer=Customer::where('email',$request->email)->first();
+       
         $this->customer=Customer::where('email',$request->email)->first();
     
        if( $this->customer){
@@ -42,6 +41,10 @@ class CustomerAuthController extends Controller
         return $request->all();
     }
 
+    public function profile()
+    {
+        return view('customer.profile');
+    }
     public function dashboard()
     {
         return view('customer.dashboard');
