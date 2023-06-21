@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('payment_type');
             $table->string('payment_status')->default('Pending');
             $table->string('currency')->default('BDT');
-            $table->string('transection_id')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
     }
