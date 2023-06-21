@@ -16,7 +16,7 @@ class SslCommerzPaymentController extends Controller
 
     public function exampleHostedCheckout()
     {
-        return view('website.checkout.exampleHosted');
+        return view('website.checkouexampleHosted');
     }
 
     public function index(Request $request)
@@ -139,18 +139,26 @@ class SslCommerzPaymentController extends Controller
             ->where('transaction_id', $post_data['tran_id'])
             ->updateOrInsert([
                 'customer_id' =>16,
-                // 'order_date' =>date('Y-m-d'),
-                // 'order_timestamp' =>strtotime(date('Y-m-d')),
-                // 'order_total' => $post_data['total_amount'],
-                // 'tax_total' => 10,
-                // 'shpping_total' => 12,
-                // 'delivery_addres' => 'dhaka',
-                // 'payment_type' => 'Cash on Delivary',
-                'transaction_id' => $post_data['tran_id'],
+                'order_date' =>date('Y-m-d'),
+                'order_timestamp' =>strtotime(date('Y-m-d')),
+                'order_total' => 120,
+                'tax_total' => 10,
+                'shpping_total' => 12,
+                'delivery_address' => 'Dhaka',
+                'payment_type' => '1',
+                'currency' => $post_data['currency'],
+                'transaction_id' => $post_data['tran_id']
+               
+
+                // 'name' => $post_data['cus_name'],
+                // 'email' => $post_data['cus_email'],
+                // 'phone' => $post_data['cus_phone'],
+                // 'amount' => $post_data['total_amount'],
+                // 'status' => 'Pending',
+                // 'address' => $post_data['cus_add1'],
+                // 'transaction_id' => $post_data['tran_id'],
                 // 'currency' => $post_data['currency']
             ]);
-
-            
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
