@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use DB;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use Session;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -16,30 +19,55 @@ class SslCommerzPaymentController extends Controller
 
     public function exampleHostedCheckout()
     {
-        return view('website.checkouexampleHosted');
+        return view('website.checkout.exampleHosted');
     }
 
     public function index(Request $request)
     {
+        //  return $request->all();
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
         # In "orders" table, order unique identity is "transaction_id". "status" field contain status of the transaction, "amount" is the order amount to be paid and "currency" is for storing Site Currency which will be checked with paid currency.
+       
+        if(Session::get('customer_id')){
+            $this->customer=Customer::find(Session::get('customer_id'));
+        }else{
 
+            $this->validate($request,[
+                'name'=>'required',
+                'email'=>'required|unique:customers,email',
+                'mobile'=>'required|unique:customers,mobile',
+                'delivary_address'=>'required',
+            ]);
+           
+            // $this->validate($request,[
+            //     'name'=>'required',
+            //     'email'=>'required|unique:customers,email',
+            //     'mobile'=>'required|unique:customers,mobile',
+            //     'delivary_address'=>'required',
+            // ]);
+            // $this->orderCustomerValidate($request);
+            $this->customer= Customer::newCustomer($request);
+            Session::put('customer_id', $this->customer->id);
+            Session::put('customer_name', $this->customer->name);
+        }
+       
+       
         $post_data = array();
-        $post_data['total_amount'] = '10'; # You cant not pay less than 10
+        $post_data['total_amount'] = Session::get('order_total'); # You cant not pay less than 10
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = uniqid(); // tran_id must be unique
 
         # CUSTOMER INFORMATION
-        $post_data['cus_name'] = 'Customer Name';
-        $post_data['cus_email'] = 'customer@mail.com';
+        $post_data['cus_name'] = $this->customer->name;
+        $post_data['cus_email'] = $this->customer->email;
         $post_data['cus_add1'] = 'Customer Address';
         $post_data['cus_add2'] = "";
         $post_data['cus_city'] = "";
         $post_data['cus_state'] = "";
         $post_data['cus_postcode'] = "";
         $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = '8801XXXXXXXXX';
+        $post_data['cus_phone'] = $this->customer->mobile;
         $post_data['cus_fax'] = "";
 
         # SHIPMENT INFORMATION
@@ -67,15 +95,19 @@ class SslCommerzPaymentController extends Controller
         $update_product = DB::table('orders')
             ->where('transaction_id', $post_data['tran_id'])
             ->updateOrInsert([
-                'name' => $post_data['cus_name'],
-                'email' => $post_data['cus_email'],
-                'phone' => $post_data['cus_phone'],
-                'amount' => $post_data['total_amount'],
-                'status' => 'Pending',
-                'address' => $post_data['cus_add1'],
+                'customer_id' => $this->customer->id,
+                'order_date' => date('Y-m-d'),
+                'order_timestamp' => strtotime(date('Y-m-d')),
+                'order_total' => $post_data['total_amount'],
+                'tax_total' => Session::get('tax_total'),
+                'shpping_total' => Session::get('shpping_total'),
+                'delivery_address' => $request->delivary_address,
+                'payment_type' => $request->payment_type,
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency']
             ]);
+
+            OrderDetail::newOrderDetail(Order::orderBy('id','desc')->first()->id);
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
@@ -173,6 +205,9 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
+        // return $request->all();
+        
+        
         echo "Transaction is Successful";
 
         $tran_id = $request->input('tran_id');
@@ -184,9 +219,9 @@ class SslCommerzPaymentController extends Controller
         #Check order status in order tabel against the transaction id or order id.
         $order_details = DB::table('orders')
             ->where('transaction_id', $tran_id)
-            ->select('transaction_id', 'status', 'currency', 'amount')->first();
+            ->select('transaction_id', 'order_status', 'currency', 'order_total')->first();
 
-        if ($order_details->status == 'Pending') {
+        if ($order_details->order_status == 'Pending') {
             $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
 
             if ($validation) {
@@ -197,15 +232,17 @@ class SslCommerzPaymentController extends Controller
                 */
                 $update_product = DB::table('orders')
                     ->where('transaction_id', $tran_id)
-                    ->update(['status' => 'Processing']);
+                    ->update(['order_status' => 'Processing']);
 
                 echo "<br >Transaction is successfully Completed";
+                return redirect('/complete-order')->with('message','Congratulationsuccessfully...order success.');
             }
-        } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
+        } else if ($order_details->order_status == 'Processing' || $order_details->order_status == 'Complete') {
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
             echo "Transaction is successfully Completed";
+            return redirect('/complete-order')->with('message','Congratulationsuccessfully...order success.');
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
             echo "Invalid Transaction";
@@ -268,11 +305,11 @@ class SslCommerzPaymentController extends Controller
             #Check order status in order tabel against the transaction id or order id.
             $order_details = DB::table('orders')
                 ->where('transaction_id', $tran_id)
-                ->select('transaction_id', 'status', 'currency', 'amount')->first();
+                ->select('transaction_id', 'order_status', 'currency', 'order_total')->first();
 
-            if ($order_details->status == 'Pending') {
+            if ($order_details->order_status == 'Pending') {
                 $sslc = new SslCommerzNotification();
-                $validation = $sslc->orderValidate($request->all(), $tran_id, $order_details->amount, $order_details->currency);
+                $validation = $sslc->orderValidate($request->all(), $tran_id, $order_details->order_total, $order_details->currency);
                 if ($validation == TRUE) {
                     /*
                     That means IPN worked. Here you need to update order status
@@ -281,11 +318,11 @@ class SslCommerzPaymentController extends Controller
                     */
                     $update_product = DB::table('orders')
                         ->where('transaction_id', $tran_id)
-                        ->update(['status' => 'Processing']);
+                        ->update(['order_status' => 'Processing']);
 
                     echo "Transaction is successfully Completed";
                 }
-            } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
+            } else if ($order_details->order_status == 'Processing' || $order_details->order_status == 'Complete') {
 
                 #That means Order status already updated. No need to udate database.
 

@@ -11,7 +11,8 @@ class BrandController extends Controller
         return view('admin.brand.index');
     }
 
-    public function create(Request $request ){
+    public function create(Request $request )
+    {
         Brand::newBrand($request);
         return back()->with('message','Brand info created successfully.');
     }
