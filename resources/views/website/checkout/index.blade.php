@@ -160,7 +160,9 @@ Checkout page
 
                 <div class="mb-3">
                     <label for="address">Address</label>
-                    <textarea  placeholder=" Address" name="delivary_address"></textarea>
+                    <!-- <textarea  placeholder=" Address" name="delivary_address"></textarea> -->
+                    <input type="text" class="form-control"  name="delivary_address" id="address" placeholder="1234 Main St"
+                           value="" required>
                 </div>
 
         

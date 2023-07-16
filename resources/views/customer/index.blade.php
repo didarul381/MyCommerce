@@ -67,23 +67,27 @@ Customer login  page
      <h2> Register Form</h2>
         </div>
         <div class="card-body">
-        <form action="" method="POST">
+        <form action="{{route('customer.register')}}" method="POST">
+            @csrf
             <div class="row mb-3">
                 <label for="" class="col-md-3"> Full Name:</label>
                 <div class="col-md-9">
                     <input type="text" name="name" class="form-control"/>
+                    <span class="text-danger">{{$errors->has('name')?$errors->first('name'):''}}</span>
                 </div>
                 </div>
             <div class="row mb-3">
             <label for="" class="col-md-3"> Email Address:</label>
             <div class="col-md-9">
                 <input type="email" name="email" class="form-control"/>
+                <span class="text-danger">{{$errors->has('email')?$errors->first('email'):''}}</span>
             </div>
             </div>
             <div class="row mb-3">
                 <label for="" class="col-md-3"> Mobile:</label>
                 <div class="col-md-9">
                     <input type="number" name="mobile" class="form-control"/>
+                    <span class="text-danger">{{$errors->has('mobile')?$errors->first('mobile'):''}}</span>
                 </div>
                 </div>
             <div class="row mb-3">
