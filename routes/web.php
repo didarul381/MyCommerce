@@ -121,7 +121,13 @@ Route::get('product/detail/{id}',[ProductController::class, 'detail'])->name('pr
 Route::get('product/edit/{id}',[ProductController::class, 'edit'])->name('product.edit');
 Route::post('product/update{id}',[ProductController::class, 'update'])->name('product.update');
 Route::get('product/delete/{id}',[ProductController::class, 'delete'])->name('product.delete');
+
 Route::get('/admin/all-order',[AdminOrderController::class, 'index'])->name('admin.all-order');
+Route::get('/admin/order-detail/{id}',[AdminOrderController::class, 'detail'])->name('admin.order-detail');
+Route::get('/admin/order-edit/{id}',[AdminOrderController::class, 'edit'])->name('admin.order-edit');
+Route::get('/admin/order-invoice/{id}',[AdminOrderController::class, 'showInvoice'])->name('admin.order-invoice');
+Route::get('/admin/order-print/{id}',[AdminOrderController::class, 'printInvoice'])->name('admin.order-print');
+Route::get('/admin/order-delete/{id}',[AdminOrderController::class, 'delete'])->name('admin.order-delete');
 
 
 

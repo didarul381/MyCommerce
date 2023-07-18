@@ -12,6 +12,8 @@ use Session;
 class SslCommerzPaymentController extends Controller
 {
 
+    private $customer;
+
     public function exampleEasyCheckout()
     {
         return view('website.checkout.exampleEasycheckout');
