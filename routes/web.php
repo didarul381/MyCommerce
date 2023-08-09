@@ -125,6 +125,7 @@ Route::get('product/delete/{id}',[ProductController::class, 'delete'])->name('pr
 Route::get('/admin/all-order',[AdminOrderController::class, 'index'])->name('admin.all-order');
 Route::get('/admin/order-detail/{id}',[AdminOrderController::class, 'detail'])->name('admin.order-detail');
 Route::get('/admin/order-edit/{id}',[AdminOrderController::class, 'edit'])->name('admin.order-edit');
+Route::post('/admin.update-order/{id}',[AdminOrderController::class, 'update'])->name('admin.update-order');
 Route::get('/admin/order-invoice/{id}',[AdminOrderController::class, 'showInvoice'])->name('admin.order-invoice');
 Route::get('/admin/order-print/{id}',[AdminOrderController::class, 'printInvoice'])->name('admin.order-print');
 Route::get('/admin/order-delete/{id}',[AdminOrderController::class, 'delete'])->name('admin.order-delete');

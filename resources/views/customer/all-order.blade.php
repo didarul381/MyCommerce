@@ -49,20 +49,23 @@ Customer Dashboard
                     <th>SL No</th>
                     <th>Order No</th>
                     <th>Order Date</th>
+                    <th>Order qty</th>
                     <th>Order Total</th>
                     <th>Delivary Address</th>
-                    <th>Action</th>
+                   
+                    
                 </tr>
             </thead>
             <tbody>
                 @foreach($orders as $order)
                 <tr>
-                <td>1</td>
+                <td>{{$loop->iteration}}</td>
                 <td>{{$order->id}}</td>
                 <td>{{$order->order_date}}</td>
+                <td>{{$order->order_qty}}</td>
                 <td>{{$order->order_total}}</td>
                 <td>{{$order->delivery_address}}</td>
-                <td>1</td>
+                
                 </tr>
                 @endforeach
             </tbody>
