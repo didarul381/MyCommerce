@@ -24,38 +24,48 @@ class AdminOrderController extends Controller
     public function update(Request $request,$id)
     {
         //  return $request;
+        $this->order=Order::find($id);
         if( $request->order_status=='Pending'){
-              
-            return back()->with('message','Order Info update successfully');
+            $this->order->order_status= $request->order_status;
+            $this->order->delivery_status= $request->order_status;
+            $this->order->payment_status= $request->order_status;
+            $this->order->save();
+            // return redirect('/admin/all-order')->with('message','Order Info update successfully');
+            // return back()->with('message','Order Info update successfully');
         }
         else if($request->order_status=='Processing'){
-             $this->order=Order::find($id);
+            
              $this->order->order_status= $request->order_status;
              $this->order->delivery_address= $request->delivary_address;
              $this->order->delivery_status= $request->order_status;
              $this->order->payment_status= $request->order_status;
              $this->order->save();
-             return redirect('/admin/all-order')->with('message','Order Info update successfully');
+            //  return redirect('/admin/all-order')->with('message','Order Info update successfully');
         }
         else if($request->order_status=='Complete'){
             
-            $this->order=Order::find($id);
+           
              $this->order->order_status= $request->order_status;
              $this->order->delivery_status= $request->order_status;
              $this->order->payment_status= $request->payment_status;
              $this->order->save();
-             return redirect('/admin/all-order')->with('message','Order Info update successfully');
+            //  return redirect('/admin/all-order')->with('message','Order Info update successfully');
         }
         else if($request->order_status=='Cancel'){
+            $this->order->order_status= $request->order_status;
+             $this->order->delivery_status= $request->order_status;
+             $this->order->payment_status= $request->payment_status;
+             $this->order->save();
             
         }
+        return redirect('/admin/all-order')->with('message','Order Info update successfully');
     
        
         // return view('admin.order.edit',['order'=>Order::find($id)]); 
     }
     public function showInvoice($id)
     {
-        return view('admin.order.invoice',['orders'=>Order::find($id)]); 
+        return view('admin.order.invoice',['order'=>Order::find($id)]); 
     }
     public function printInvoice($id)
     {

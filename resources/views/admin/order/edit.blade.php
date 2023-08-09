@@ -12,6 +12,12 @@
                                     @csrf
                                     <h4 class="text-center text-success">{{Session::get('message')}}</h4> 
                                     <div class="row mb-3">
+                                        <label for="" class="col-md-3">Customer Ifo</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" readonly value="{{$order->customer->name}}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
                                         <label for="" class="col-md-3">Order Id</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" readonly value="{{$order->id}}"/>
@@ -27,10 +33,10 @@
                                         <label for="" class="col-md-3">Order Status</label>
                                         <div class="col-md-9">
                                            <select name="order_status" id="" class="form-control">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Processing">Processing</option>
-                                            <option value="Complete">Complete</option>
-                                            <option value="Cancel">Cancel</option>
+                                            <option value="Pending"{{$order->order_status=='Pending'?'selected':''}}>Pending</option>
+                                            <option value="Processing" {{$order->order_status=='Processing'?'selected':''}}>Processing</option>
+                                            <option value="Complete"{{$order->order_status=='Complete'?'selected':''}}>Complete</option>
+                                            <option value="Cancel" {{$order->order_status=='Cancel'?'selected':''}}>Cancel</option>
                                             
                                            </select>
                                         </div>
