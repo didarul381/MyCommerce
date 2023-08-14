@@ -159,6 +159,7 @@
                     <td>Total</td>
 					
 				</tr>
+				@php($sum=0)
                   @foreach($order->orderDetails as $orderDetail)
 				<tr class="item">
 					<td>{{$orderDetail->product_name}}</td>
@@ -166,7 +167,7 @@
                     <td>{{$orderDetail->product_qty}}</td>
 					<td>{{$orderDetail->product_price * $orderDetail->product_qty}}</td>
 				</tr>
-
+                   @php($sum=$sum+$orderDetail->product_price * $orderDetail->product_qty)
 				@endforeach
 
 				<tr class="total">
@@ -175,7 +176,7 @@
 					
 
 
-					<td style="text-align:right">Total: $385.00</td>
+					<td style="text-align:right">Total:{{$sum}}</td>
 				</tr>
 			</table>
 		</div>

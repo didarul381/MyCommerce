@@ -47,7 +47,7 @@
                                                     <a href="{{route('admin.order-invoice',['id'=>$order->id])}}" title="order invoice" class="btn btn-success btn-sm">
                                                         <i class="ti-reddit"></i>
                                                     </a>
-                                                    <a href="{{route('admin.order-print',['id'=>$order->id])}}" title="order print" class="btn btn-warning btn-sm">
+                                                    <a href="{{route('admin.order-print',['id'=>$order->id])}}" target="_blank" title="order print" class="btn btn-warning btn-sm">
                                                         <i class="ti-reddit"></i>
                                                     </a>
                                                     <a href="{{route('admin.order-delete',['id'=>$order->id])}}" title="order Delete" onclick="return confirm('Are you sure to delete');" class="btn btn-success btn-sm">
