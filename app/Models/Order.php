@@ -28,6 +28,11 @@ class Order extends Model
         
     }
 
+    public static function deleteOrder($id){
+        self::$order=Order::find($id);
+        self::$order->delete();
+    }
+
     public function customer(){
         return $this->belongsTo(Customer::class);
     }

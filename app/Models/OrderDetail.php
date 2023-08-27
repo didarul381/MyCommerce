@@ -10,7 +10,7 @@ class OrderDetail extends Model
 {
     use HasFactory;
   
-    private static $orderDetail;
+    private static $orderDetail,$orderDetails;
     public static function newOrderDetail($orderId)
     {
         foreach(ShoppingCart::all() as $item){
@@ -26,5 +26,14 @@ class OrderDetail extends Model
             
        
    }
+    }
+
+    public static function deleteDetailOrder($id)
+    {
+        self::$orderDetails= OrderDetail::where('order_id',$id)->get();
+        foreach(self::$orderDetails as $orderDetail){
+            $orderDetail->delete();
+        }
+
     }
 }

@@ -41,7 +41,9 @@
                                                 <a href="{{route('admin.order-detail',['id'=>$order->id])}}" title="view oeder detail" class="btn btn-success btn-sm">
                                                         <i class="ti-reddit"></i>
                                                     </a>
-                                                    <a href="{{route('admin.order-edit',['id'=>$order->id])}}" title="view order edit" class="btn btn-success btn-sm">
+                                                    <a href="{{route('admin.order-edit',['id'=>$order->id])}}"
+                                                     class="btn btn-success {{$order->order_status =='Complete'?'disabled':''}}"
+                                                    title="view order edit" class="btn btn-success btn-sm">
                                                         <i class="ti-reddit"></i>
                                                     </a>
                                                     <a href="{{route('admin.order-invoice',['id'=>$order->id])}}" title="order invoice" class="btn btn-success btn-sm">
@@ -50,7 +52,9 @@
                                                     <a href="{{route('admin.order-print',['id'=>$order->id])}}" target="_blank" title="order print" class="btn btn-warning btn-sm">
                                                         <i class="ti-reddit"></i>
                                                     </a>
-                                                    <a href="{{route('admin.order-delete',['id'=>$order->id])}}" title="order Delete" onclick="return confirm('Are you sure to delete');" class="btn btn-success btn-sm">
+                                                    <a href="{{route('admin.order-delete',['id'=>$order->id])}}" 
+                                                    class=" {{$order->order_status =='Cancel'?'btn btn-danger':'btn btn-danger disabled'}}"
+                                                    title="order Delete" onclick="return confirm('Are you sure to delete');">
                                                         <i class="ti ti-trash"></i>
                                                     </a>
                                                 </td>

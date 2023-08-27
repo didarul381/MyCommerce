@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use PDF;
 class AdminOrderController extends Controller
 {
@@ -30,7 +31,7 @@ class AdminOrderController extends Controller
             $this->order->order_status= $request->order_status;
             $this->order->delivery_status= $request->order_status;
             $this->order->payment_status= $request->order_status;
-            $this->order->save();
+          
             // return redirect('/admin/all-order')->with('message','Order Info update successfully');
             // return back()->with('message','Order Info update successfully');
         }
@@ -40,7 +41,7 @@ class AdminOrderController extends Controller
              $this->order->delivery_address= $request->delivary_address;
              $this->order->delivery_status= $request->order_status;
              $this->order->payment_status= $request->order_status;
-             $this->order->save();
+            
             //  return redirect('/admin/all-order')->with('message','Order Info update successfully');
         }
         else if($request->order_status=='Complete'){
@@ -48,17 +49,18 @@ class AdminOrderController extends Controller
            
              $this->order->order_status= $request->order_status;
              $this->order->delivery_status= $request->order_status;
-             $this->order->payment_status= $request->payment_status;
-             $this->order->save();
+             $this->order->payment_status= $request->order_status;
+            
             //  return redirect('/admin/all-order')->with('message','Order Info update successfully');
         }
         else if($request->order_status=='Cancel'){
             $this->order->order_status= $request->order_status;
              $this->order->delivery_status= $request->order_status;
-             $this->order->payment_status= $request->payment_status;
-             $this->order->save();
+             $this->order->payment_status= $request->order_status;
+            
             
         }
+        $this->order->save();
         return redirect('/admin/all-order')->with('message','Order Info update successfully');
     
        
@@ -81,7 +83,16 @@ class AdminOrderController extends Controller
         // return view('admin.order.print-invoice',['orders'=>Order::find($id)]); 
     }
     public function delete($id)
+
     {
-       return $id;
+         $this->order=Order::find($id);
+        if($this->order->order_status=='Cancel'){
+
+            Order::deleteOrder($id);
+            OrderDetail::deleteDetailOrder($id);
+            return back()->with('message','Order Info delete successfully');
+        }
+        return back()->with('message','Sorry..Order Info not delete successfully');
+       
     }
 }
